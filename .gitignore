@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Environment / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Local data
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+data/
+
+# Logs
+*.log
+logs/
+
+# Test / coverage
+coverage/
+.vitest/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+
+# Electron / packaging (later phases)
+apps/desktop/release/
+apps/desktop/dist-electron/
+
+# Backend deploy artifacts (local)
+apps/backend/.deploy/
+apps/backend/*.zip
+
+# Local deployment identifiers (subscription, key vault) - keep out of the repo
+config/deployment.json

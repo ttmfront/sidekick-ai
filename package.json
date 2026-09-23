@@ -1,0 +1,29 @@
+{
+  "name": "agent-triager",
+  "private": true,
+  "version": "0.0.0",
+  "description": "AI ADO Triage Program Manager — Windows desktop agent that listens to live triage meetings and updates Azure DevOps via validated, policy-gated workflows.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev:backend": "npm run dev --workspace @triager/backend",
+    "build:backend": "npm run build --workspace @triager/backend",
+    "lint": "echo \"(lint configured in later phase)\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "pdfkit": "^0.20.2",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "vitest": "^4.1.11"
+  }
+}

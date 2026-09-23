@@ -1,0 +1,110 @@
+{
+  "program": "PROGRAM_A",
+  "organizationUrl": "https://dev.azure.com/your-org",
+  "project": "YourProject",
+  "queryName": "TEAM_SPRINT_QUERY",
+  "queryPath": "Shared Queries/Products/PROGRAM_B/TEAM_SPRINT_QUERY",
+  "products": [
+    {
+      "id": "PROGRAM_A",
+      "aliases": [
+        "701",
+        "ALPHA"
+      ]
+    },
+    {
+      "id": "PROGRAM_B",
+      "aliases": [
+        "702",
+        "BETA"
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "code": "VR",
+      "name": "Validation Ready",
+      "aliases": [
+        "SW-VR",
+        "SW VR"
+      ]
+    },
+    {
+      "code": "CC",
+      "name": "Code Complete",
+      "aliases": [
+        "SW-CC"
+      ]
+    },
+    {
+      "code": "QCC",
+      "name": "Quality Control Check",
+      "aliases": [
+        "SW-QCC"
+      ]
+    }
+  ],
+  "defaultPartner": "PartnerCases",
+  "partnerPrograms": [
+    {
+      "product": "PROGRAM_A",
+      "partner": "PartnerCases",
+      "program": "PROGRAM_A-PC"
+    },
+    {
+      "product": "PROGRAM_B",
+      "partner": "PartnerCases",
+      "program": "PROGRAM_B-PC"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "VR",
+      "definition": "Validation Ready milestone"
+    },
+    {
+      "term": "CC",
+      "definition": "Code Complete milestone"
+    },
+    {
+      "term": "QCC",
+      "definition": "Quality Control Check milestone"
+    },
+    {
+      "term": "PartnerCo",
+      "definition": "External engineering partner",
+      "aliases": [
+        "PC"
+      ]
+    },
+    {
+      "term": "PC case",
+      "definition": "Partner bug/case"
+    },
+    {
+      "term": "BSP",
+      "definition": "Board Support Package"
+    },
+    {
+      "term": "ETL",
+      "definition": "Event Trace Log diagnostic capture"
+    },
+    {
+      "term": "HLOS",
+      "definition": "High-Level Operating System"
+    },
+    {
+      "term": "GPIO",
+      "definition": "General Purpose Input/Output"
+    },
+    {
+      "term": "UEFI",
+      "definition": "Unified Extensible Firmware Interface"
+    },
+    {
+      "term": "SAM",
+      "definition": "System firmware/SAM version identifier"
+    }
+  ],
+  "requiredFields": []
+}

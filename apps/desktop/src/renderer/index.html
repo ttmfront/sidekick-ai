@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:" />
+    <title>Microsoft Surface · Sidekick</title>
+    <style>
+      :root {
+        --bg:#ffffff; --surface:#ffffff; --surface-2:#f6f6f6; --border:#e1dfdd; --border-strong:#d2d0ce;
+        --text:#201f1e; --muted:#605e5c; --subtle:#8a8886;
+        --accent:#0078d4; --accent-hover:#106ebe; --accent-pressed:#005a9e;
+        --green:#107c10; --red:#d13438; --amber:#f7630c;
+        --shadow:0 1.6px 3.6px rgba(0,0,0,.10),0 .3px .9px rgba(0,0,0,.07);
+        --shadow-lg:0 6.4px 14.4px rgba(0,0,0,.13),0 1.2px 3.6px rgba(0,0,0,.09);
+        --radius:8px;
+      }
+      * { box-sizing:border-box; }
+      html,body { height:100%; margin:0; }
+      body { background:var(--bg); color:var(--text); font:13px/1.5 "Segoe UI Variable Text","Segoe UI",system-ui,sans-serif; display:flex; flex-direction:column; -webkit-font-smoothing:antialiased; }
+      :focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+
+      header { display:flex; align-items:center; gap:14px; padding:10px 20px; background:var(--surface); border-bottom:1px solid var(--border); box-shadow:var(--shadow); z-index:5; }
+      .brand { display:flex; align-items:center; gap:10px; }
+      .ms-logo { display:inline-grid; grid-template-columns:repeat(2,11px); grid-template-rows:repeat(2,11px); gap:2px; }
+      .ms-logo i { display:block; }
+      .ms-logo i:nth-child(1){ background:#F25022; } .ms-logo i:nth-child(2){ background:#7FBA00; }
+      .ms-logo i:nth-child(3){ background:#00A4EF; } .ms-logo i:nth-child(4){ background:#FFB900; }
+      .brand-name { font-size:15px; letter-spacing:.2px; color:var(--text); }
+      .brand-name b { font-weight:600; } .brand-name .sub { color:var(--muted); font-weight:400; }
+      .brand-sep { width:1px; height:22px; background:var(--border); }
+      .appname { display:flex; flex-direction:column; line-height:1.25; color:var(--text); }
+      .appname-primary { font-weight:600; font-size:14px; }
+      .appname-subtitle { color:var(--muted); font-size:11px; }
+      header .spacer { flex:1; }
+      .status { display:flex; align-items:center; gap:7px; color:var(--muted); font-size:12px; }
+      .dot { width:9px; height:9px; border-radius:50%; background:var(--subtle); box-shadow:0 0 0 3px rgba(0,0,0,.03); }
+      .dot.on { background:var(--green); } .dot.off { background:var(--red); } .dot.busy { background:var(--amber); }
+      button { background:var(--accent); color:#fff; border:1px solid var(--accent); border-radius:4px; padding:7px 16px; font:inherit; font-weight:600; cursor:pointer; transition:background .1s ease,border-color .1s ease; }
+      button:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+      button:active { background:var(--accent-pressed); border-color:var(--accent-pressed); }
+      button.secondary { background:var(--surface); color:var(--text); border:1px solid var(--border-strong); }
+      button.secondary:hover { background:var(--surface-2); }
+      button.danger { background:var(--red); border-color:var(--red); }
+      button.danger:hover { background:#a4262c; border-color:#a4262c; }
+      button:disabled { opacity:.45; cursor:not-allowed; }
+      .account { color:var(--muted); font-size:12px; } .account b { color:var(--text); }
+
+      .bug { display:flex; align-items:center; gap:16px; padding:14px 20px; background:linear-gradient(90deg,#eff6fc 0%,#ffffff 55%); border-bottom:1px solid var(--border); }
+      .bug .bid { font-size:22px; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; }
+      .bug .btitle { font-weight:600; font-size:14px; }
+      .bug .bmeta { color:var(--muted); font-size:12px; }
+      .bug .focus { margin-left:auto; display:flex; align-items:center; gap:6px; }
+      .bug .focus input { width:120px; background:var(--surface); border:1px solid var(--border-strong); color:var(--text); border-radius:4px; padding:6px 8px; font:inherit; }
+      .bug .focus input:focus { outline:none; border-color:var(--accent); }
+      .bug .bwatch { margin-left:16px; color:var(--muted); font-size:12px; display:flex; align-items:center; gap:7px; }
+
+      .bar { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 20px; border-bottom:1px solid var(--border); background:var(--surface-2); }
+      .bar label { color:var(--muted); display:flex; align-items:center; gap:6px; font-size:12px; }
+      .bar select, .bar input[type=text] { background:var(--surface); border:1px solid var(--border-strong); color:var(--text); border-radius:4px; padding:6px 8px; font:inherit; }
+      .bar select:focus, .bar input[type=text]:focus { border-color:var(--accent); outline:none; }
+      .bar input[type=text] { width:150px; }
+      .bar input[type=checkbox] { accent-color:var(--accent); width:15px; height:15px; }
+      .bigbtn { padding:9px 20px; font-size:14px; font-weight:600; }
+
+      main { flex:1; overflow:hidden; padding:16px 20px; display:flex; gap:16px; background:var(--bg); }
+      .ctx { flex:0 0 38%; display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px; }
+      .activity { flex:1; display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); padding:14px; }
+      .panel-h { font-weight:600; color:var(--text); margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+      button.small { padding:5px 12px; font-size:12px; }
+      .panel-h button.small { margin-left:auto; }
+      #ctx-notes { height:150px; resize:vertical; background:var(--surface-2); border:1px solid var(--border-strong); color:var(--text); border-radius:6px; padding:10px; font:inherit; outline:none; }
+      #ctx-notes:focus { border-color:var(--accent); background:#fff; }
+      .doc-list { margin-top:10px; overflow:auto; display:flex; flex-direction:column; gap:6px; }
+      .doc { display:flex; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--border); border-radius:6px; padding:7px 10px; }
+      .doc .dname { font-weight:600; word-break:break-all; }
+      .doc .dmeta { color:var(--muted); font-size:11px; white-space:nowrap; }
+      .doc .drm { margin-left:auto; background:var(--surface); color:var(--muted); border:1px solid var(--border-strong); border-radius:4px; padding:3px 10px; cursor:pointer; font:inherit; font-weight:600; }
+      .doc .drm:hover { color:var(--red); border-color:var(--red); }
+      .doc.err { border-color:var(--red); background:#fdf3f4; }
+      .doc.err .dmeta { color:var(--red); white-space:normal; }
+      #feed { overflow:auto; flex:1; }
+      .feed-empty { color:var(--muted); text-align:center; padding:44px 20px; line-height:1.7; }
+      .entry { display:flex; gap:10px; padding:9px 2px; border-bottom:1px solid var(--border); }
+      .entry:last-child { border-bottom:0; }
+      .entry .ts { color:var(--subtle); font-size:11px; min-width:64px; font-variant-numeric:tabular-nums; }
+      .entry .body { flex:1; }
+      .entry .who { font-weight:600; margin-right:6px; }
+      .entry.you .who { color:var(--accent); }
+      .entry.agent .who { color:var(--green); }
+      .entry.speaker .who { color:#8764b8; }
+      .entry.applied .body { color:var(--green); font-weight:500; }
+      .entry.error .body { color:var(--red); }
+      .entry.system .body { color:var(--muted); }
+      .entry.suggest { background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:8px 10px; margin:4px 0; }
+      .entry.suggest .risk { padding:1px 8px; border-radius:999px; font-size:11px; margin-left:6px; }
+      .risk.low{background:#dff6dd;color:#0b6a0b;} .risk.medium{background:#fff4ce;color:#835c00;} .risk.high{background:#fde7e9;color:#a4262c;}
+      .entry.suggest .diff { font-family:Consolas,monospace; font-size:12px; color:var(--muted); margin:4px 0; }
+      .entry.suggest .b{color:#a4262c;} .entry.suggest .a{color:#0b6a0b;}
+      .entry.suggest .pbtns { display:flex; gap:6px; margin-top:4px; }
+      .entry.suggest .apply { background:var(--green); color:#fff; padding:4px 10px; border-color:var(--green); }
+      .entry.suggest button { padding:4px 10px; }
+      .entry.suggest textarea { width:100%; min-height:62px; margin-top:7px; padding:7px; border:1px solid var(--border-strong); border-radius:4px; font:inherit; display:none; }
+
+      #toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--surface); border:1px solid var(--border); color:var(--text); padding:11px 18px; border-radius:8px; max-width:70%; display:none; box-shadow:var(--shadow-lg); }
+      #toast.err { border-left:3px solid var(--red); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="brand">
+        <span class="ms-logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name"><b>Microsoft</b>&nbsp;<span class="sub">Surface</span></span>
+      </span>
+      <span class="brand-sep"></span>
+      <span class="appname">
+        <span class="appname-primary">Sidekick</span>
+        <span class="appname-subtitle">Your AI Engineering Teammate</span>
+      </span>
+      <span class="status"><span class="dot off" id="ado-dot"></span><span id="ado-text">Not connected</span></span>
+      <span class="spacer"></span>
+      <span class="account" id="account">Not signed in</span>
+      <button id="btn-signin">Sign in with Microsoft</button>
+      <button id="btn-signout" class="secondary" style="display:none">Sign out</button>
+    </header>
+
+    <div class="bug">
+      <span class="bid" id="bug-id">—</span>
+      <div>
+        <div class="btitle" id="bug-title">No bug detected</div>
+        <div class="bmeta" id="bug-meta">Start the meeting and open a work item on screen.</div>
+      </div>
+      <form class="focus" id="focus-form">
+        <input id="inp-focus" type="text" inputmode="numeric" autocomplete="off" placeholder="Go to bug #" />
+        <button type="submit" class="secondary small">Go</button>
+      </form>
+      <span class="bwatch"><span class="dot off" id="screen-dot"></span><span id="screen-text">Screen: off</span></span>
+    </div>
+
+    <div class="bar">
+      <button id="btn-meeting" class="bigbtn" disabled>▶ Start meeting</button>
+      <span class="status"><span class="dot off" id="mic-dot"></span><span id="mic-text">Voice off</span></span>
+      <span style="flex:1"></span>
+      <label>Autonomy
+        <select id="sel-autonomy">
+          <option value="auto">Auto-apply explicit requests</option>
+          <option value="suggest" selected>Confirm changes</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="chk-highrisk" /> Auto high-risk</label>
+      <label><input type="checkbox" id="chk-screen" checked /> Watch screen</label>
+      <label>Tag <input type="text" id="inp-tag" value="added by electron" /></label>
+    </div>
+
+    <main>
+      <section class="ctx">
+        <div class="panel-h">Meeting context &amp; documents
+          <button id="btn-adddoc" class="secondary small">+ Add document</button>
+        </div>
+        <textarea id="ctx-notes" placeholder="Add context for this meeting — attach datasheets/PDFs or docs with + Add document, or paste specs, decisions, and notes here. Ask about it during the call and the agent will use it to answer and act."></textarea>
+        <div class="doc-list" id="doc-list"></div>
+      </section>
+      <section class="activity">
+        <div class="panel-h">Activity</div>
+        <div class="feed-empty" id="feed-empty">Sign in, then press <b>Start meeting</b>. The agent listens, watches the screen to track the current bug, and updates ADO as decisions settle — its actions show here.</div>
+        <div id="feed"></div>
+      </section>
+    </main>
+
+    <div id="toast"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>

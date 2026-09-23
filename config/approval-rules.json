@@ -1,0 +1,8 @@
+{
+  "$comment": "Approval policy for the deterministic safety gate. Conservative MVP defaults: no risky write executes without a human. Tighten autoExecute* only after live validation.",
+  "minConfidence": 0.55,
+  "autoExecuteLowRisk": true,
+  "autoExecuteMediumRisk": false,
+  "mediumRiskAutoThreshold": 0.9,
+  "allowPartnerAutoSend": false
+}

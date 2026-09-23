@@ -1,0 +1,23 @@
+{
+  "name": "@triager/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/main/index.js",
+  "scripts": {
+    "build": "tsup && node scripts/postbuild.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "electron .",
+    "dev": "npm run build && electron ."
+  },
+  "dependencies": {
+    "@azure/identity": "^4.5.0",
+    "@triager/ado": "*",
+    "@triager/knowledge": "*",
+    "@triager/shared": "*",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "tsup": "^8.3.0"
+  }
+}
