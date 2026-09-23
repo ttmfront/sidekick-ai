@@ -26,7 +26,7 @@ export function loadBackendConfig(env: NodeJS.ProcessEnv = process.env): Backend
   return {
     port: Number(env.PORT ?? 8787),
     nodeEnv: optional(env.NODE_ENV) ?? 'development',
-    programConfigPath: optional(env.PROGRAM_CONFIG) ?? 'config/program.PROGRAM_A.json',
+    programConfigPath: optional(env.PROGRAM_CONFIG) ?? 'config/program.json',
     aiProvider: provider,
     openaiApiKey: optional(env.OPENAI_API_KEY),
     realtimeModel: optional(env.OPENAI_REALTIME_MODEL) ?? 'gpt-realtime',

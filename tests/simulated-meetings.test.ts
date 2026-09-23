@@ -8,7 +8,7 @@ let provider: MockReasoningProvider;
 const NOW = 1_726_700_000_000;
 
 beforeAll(async () => {
-  const cfg = await loadProgramConfig(resolve(process.cwd(), 'config/program.PROGRAM_A.json'));
+  const cfg = await loadProgramConfig(resolve(process.cwd(), 'config/program.example.json'));
   provider = new MockReasoningProvider(new ProgramKnowledge(cfg));
 });
 

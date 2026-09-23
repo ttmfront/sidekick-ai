@@ -433,7 +433,7 @@ void app.whenReady().then(async () => {
     { useSystemPicker: false }
   );
   ado = await AdoService.load(
-    join(__dirname, '../config/program.PROGRAM_A.json'),
+    join(__dirname, '../config/program.json'),
     join(__dirname, '../config/ado-schema.json')
   );
   registerIpc();

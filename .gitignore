@@ -40,5 +40,10 @@ apps/desktop/dist-electron/
 apps/backend/.deploy/
 apps/backend/*.zip
 
-# Local deployment identifiers (subscription, key vault) - keep out of the repo
+
+# Real, organization-specific config — never commit.
+# Committed *.example.json templates stand in for a fresh clone.
+config/program.json
+config/ado-schema.json
 config/deployment.json
+!config/*.example.json

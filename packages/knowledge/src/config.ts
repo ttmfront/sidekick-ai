@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 
 /**
  * Program configuration is user-editable data, not baked into source code.
@@ -53,7 +53,21 @@ export function parseProgramConfig(data: unknown): ProgramConfig {
   return ProgramConfigSchema.parse(data);
 }
 
+/**
+ * Real config files (config/ado-schema.json, config/program.<name>.json) carry
+ * organization-specific values and are gitignored. The committed *.example.json
+ * templates stand in when no real file is present, so a fresh clone still runs.
+ */
+export async function resolveConfigPath(path: string): Promise<string> {
+  try {
+    await access(path);
+    return path;
+  } catch {
+    return path.replace(/\.json$/, '.example.json');
+  }
+}
+
 export async function loadProgramConfig(path: string): Promise<ProgramConfig> {
-  const raw = await readFile(path, 'utf8');
+  const raw = await readFile(await resolveConfigPath(path), 'utf8');
   return parseProgramConfig(JSON.parse(raw));
 }

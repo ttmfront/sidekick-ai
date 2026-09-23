@@ -12,8 +12,17 @@ mkdirSync(join(appRoot, 'dist/renderer'), { recursive: true });
 mkdirSync(join(appRoot, 'dist/config'), { recursive: true });
 
 copyFileSync(join(appRoot, 'src/renderer/index.html'), join(appRoot, 'dist/renderer/index.html'));
-copyFileSync(join(repoRoot, 'config/program.PROGRAM_A.json'), join(appRoot, 'dist/config/program.PROGRAM_A.json'));
-copyFileSync(join(repoRoot, 'config/ado-schema.json'), join(appRoot, 'dist/config/ado-schema.json'));
+
+// Real config (gitignored, org-specific) wins; the committed *.example.json
+// template is copied instead when no real file is present.
+function copyConfig(name) {
+  const real = join(repoRoot, 'config', `${name}.json`);
+  const example = join(repoRoot, 'config', `${name}.example.json`);
+  copyFileSync(existsSync(real) ? real : example, join(appRoot, 'dist/config', `${name}.json`));
+}
+
+copyConfig('program');
+copyConfig('ado-schema');
 
 // Bundle the generated project-overview PDF (if present) so it can be attached by default.
 const defaultDoc = join(repoRoot, 'docs/Agent-Triager-Project-Overview.pdf');

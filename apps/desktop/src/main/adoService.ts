@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { AdoClient, reconcileSchema, type AccessTokenProvider, type AdoSchema } from '@triager/ado';
-import { loadProgramConfig, ProgramKnowledge, type ProgramConfig } from '@triager/knowledge';
+import { loadProgramConfig, resolveConfigPath, ProgramKnowledge, type ProgramConfig } from '@triager/knowledge';
 import { MockReasoningProvider } from '@triager/triage-brain';
 import {
   evaluatePolicy,
@@ -87,7 +87,7 @@ export class AdoService {
       auth
     });
     this.provider = new MockReasoningProvider(new ProgramKnowledge(this.config));
-    this.schema = JSON.parse(await readFile(this.schemaPath, 'utf8')) as AdoSchema;
+    this.schema = JSON.parse(await readFile(await resolveConfigPath(this.schemaPath), 'utf8')) as AdoSchema;
     this.executor = new ActionExecutor(this.client, () => this.schema);
     this.intelligence = new AdoIntelligenceService(
       this.client,
@@ -168,7 +168,7 @@ export class AdoService {
   async discoverSchema(): Promise<SchemaSummary> {
     const c = this.need();
     const fields = await c.getFields();
-    const base = this.schema ?? (JSON.parse(await readFile(this.schemaPath, 'utf8')) as AdoSchema);
+    const base = this.schema ?? (JSON.parse(await readFile(await resolveConfigPath(this.schemaPath), 'utf8')) as AdoSchema);
     this.schema = reconcileSchema(base, fields);
     const entries = Object.entries(this.schema.fields);
     const discovered = entries.filter(([, f]) => f.discovered && f.referenceName).length;

@@ -6,7 +6,7 @@ import { loadBackendConfig } from './config.js';
 async function makeApp(): Promise<FastifyInstance> {
   const config = {
     ...loadBackendConfig({ NODE_ENV: 'test' } as NodeJS.ProcessEnv),
-    programConfigPath: 'config/program.PROGRAM_A.json',
+    programConfigPath: 'config/program.example.json',
     nodeEnv: 'test'
   };
   return buildServer({ config });
